@@ -1,0 +1,132 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Tetris</title>
+  <style>
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      touch-action: manipulation;
+    }
+
+    button {
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 32px;
+      padding: 0;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    @media (min-height: 720px) {
+      button {
+        font-size: 64px;
+      }
+    }
+
+    #root {
+      position: relative;
+    }
+
+    .play-button-wrapper {
+      align-items: center;
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      position: absolute;
+      width: 100%;
+      z-index: 200;
+    }
+
+    .blurred {
+      filter: blur(2px);
+    }
+
+    .row {
+      text-align: center;
+    }
+
+    .cell {
+      background-color: whitesmoke;
+      display: inline-block;
+      height: 18px;
+      margin-right: 4px;
+      width: 18px;
+    }
+
+    @media (min-height: 720px) {
+      .cell {
+        height: 24px;
+        width: 24px;
+      }
+    }
+
+    .cell.cell--red {
+      background-color: #fbb;
+    }
+
+    .cell.cell--yellow {
+      background-color: #eeb;
+    }
+
+    .cell.cell--green {
+      background-color: #bfb;
+    }
+
+    .cell.cell--aqua {
+      background-color: #bee;
+    }
+
+    .cell.cell--blue {
+      background-color: #bbf;
+    }
+
+    .cell.cell--purple {
+      background-color: #ebe;
+    }
+
+    .cell.cell--grey {
+      background-color: #ddd;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+    }
+
+    .controls-vertical {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <div class="controls">
+    <button class="controls-left" onclick="moveLeft();render()">⬅️</button>
+    <div class="controls-vertical">
+      <button class="controls-up" onclick="rotate();render()">⬆️</button>
+      <button class="controls-down" onclick="moveDown();render()">⬇️</button>
+    </div>
+    <button class="controls-right" onclick="moveRight();render()">➡️</button>
+  </div>
+
+  <script src="tetris.js"></script>
+  <script src="music.js"></script>
+</body>
+
+</html>

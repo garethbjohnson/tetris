@@ -1,6 +1,14 @@
 let musicIsPlaying = false
+let musicInterval = null
 
-const playMusic = () => {
+const AudioContext = window.AudioContext || window.webkitAudioContext
+const audio = new AudioContext()
+let beeper = audio.createOscillator()
+
+const soundButton = document.querySelector('.sound-button')
+console.log('sound button:', soundButton)
+
+const startMusic = () => {
   if (musicIsPlaying) {
     return
   }
@@ -15,11 +23,6 @@ const playMusic = () => {
   const beatsPerMs = beatsPerSecond / 1000
   const stepsPerMs = beatsPerMs * 4
   const stepIntervalMs = 1 / stepsPerMs
-
-  const AudioContext = window.AudioContext || window.webkitAudioContext
-  const audio = new AudioContext()
-
-  let beeper = audio.createOscillator()
 
   const baseFrequencyByBaseNote = {
     a: 220,
@@ -138,10 +141,29 @@ const playMusic = () => {
     ""
   ]
 
-  setInterval(() => {
+  musicInterval = setInterval(() => {
     state = { ...state, currentStep: (state.currentStep + 1) % music.length }
     makeBeep(music[state.currentStep])
   }, stepIntervalMs)
 }
 
-document.onclick = playMusic
+const stopMusic = () => {
+  if (!musicIsPlaying) return
+  clearInterval(musicInterval)
+  musicIsPlaying = false
+}
+
+soundButton.onclick = () => {
+  if (musicIsPlaying) {
+    stopMusic()
+
+    try {
+      beeper.stop()
+    } catch (error) { }
+
+    soundButton.innerHTML = '🔇'
+  } else {
+    startMusic()
+    soundButton.innerHTML = '🔈'
+  }
+}
